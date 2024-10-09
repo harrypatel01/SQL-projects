@@ -1,0 +1,83 @@
+
+                                 -- pizza metrics --
+-- How many pizzas were ordered?
+
+select count(order_id) as total_order
+from customer_orders;
+
+-- How many unique customer orders were made?
+
+select count(distinct order_id) as total_Orderbyunique_customer
+from customer_orders;
+
+-- How many successful orders were delivered by each runner?
+
+select runner_id, count(order_id) as successful_delivered
+from temp_runner_orders
+where cancellation is null
+group by runner_id;
+
+-- How many of each type of pizza was delivered?
+select pizza_name, count(tt.order_id) as delivered
+from temp_runner_orders ro
+join temp_table tt
+on ro.order_id = tt.order_id
+join pizza_names pn
+on tt.pizza_id = pn.pizza_id
+where cancellation is null
+group by pizza_name;
+
+-- How many Vegetarian and Meatlovers were ordered by each customer?
+
+select tt.customer_id, pizza_name,  count(tt.order_id) as count
+from temp_runner_orders ro
+join temp_table tt
+on ro.order_id = tt.order_id
+join pizza_names pn
+on tt.pizza_id = pn.pizza_id
+group by tt.customer_id,pizza_name
+order by 1 ;
+
+-- What was the maximum number of pizzas delivered in a single order?
+select order_id, count(tt.pizza_id) as count
+from temp_table tt
+join pizza_names pn 
+on tt.pizza_id = pn.pizza_id 
+group by order_id 
+order by 2 desc limit 1;
+-- For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
+
+select tt.customer_id,
+ sum(case when (exclusions is not null or extras is not null) then 1 else 0 end) as number_of_change,
+ sum(case when (exclusions is null and extras is null) then 1 else 0 end) as number_of_no_change
+ from temp_table tt
+ join temp_runner_orders ro 
+ on tt.order_id = ro.order_id
+ where cancellation is null
+ group by 1
+ order by 1;
+ 
+-- How many pizzas were delivered that had both exclusions and extras?
+
+select sum(case when (exclusions is not null and extras is not null) then 1 else 0 end) as pizzas_with_both_requirement
+ from temp_table tt
+ join temp_runner_orders ro 
+ on tt.order_id = ro.order_id
+ where cancellation is null;
+ 
+ 
+-- What was the total volume of pizzas ordered for each hour of the day?
+
+SELECT   extract(hour from order_time) as hour_of_day,
+		 COUNT(pizza_id)
+FROM     temp_table tt
+GROUP BY 1
+ORDER BY 1;
+
+-- What was the volume of orders for each day of the week?
+
+SELECT   dayofweek(order_time) as day_of_week,
+		 COUNT(pizza_id) as count
+FROM     temp_table tt
+GROUP BY 1
+order by 1;
