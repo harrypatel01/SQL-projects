@@ -1,0 +1,77 @@
+                -- Runner and Customer Experience --
+            
+-- How many runners signed up for each 1 week period?
+
+SELECT   weekofyear(registration_date) as week_number,
+	     COUNT(runner_id) as runners_count
+FROM     pizza_runner.runners
+GROUP BY 1
+ORDER BY 1;
+
+-- What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?
+SELECT 
+    ro.runner_id,
+    ROUND(AVG(TIMESTAMPDIFF(MINUTE, tt.order_time, ro.pickup_time)), 2) AS avg_time_to_pickup
+FROM 
+    temp_runner_orders ro
+JOIN 
+    temp_table tt ON ro.order_id = tt.order_id
+WHERE 
+    ro.pickup_time IS NOT NULL 
+    AND (ro.cancellation IS NULL OR ro.cancellation = '')
+GROUP BY 
+    ro.runner_id;
+    
+--  Is there any relationship between the number of pizzas and how long the order takes to prepare?
+with order_count as
+ (select tt.order_id,
+   count(tt.order_id) as order_count,
+   timestampdiff(minute , order_time , pickup_time) as prepare_time
+   from temp_table tt
+   join temp_runner_orders ro
+   on tt.order_id = ro.order_id
+   where pickup_time is not null  and (cancellation is null)
+   group by 1, pickup_time, order_time)
+   
+   select order_count, round(avg( prepare_time),2) as prepare_timeo
+   from order_count
+   group by 1
+   order by 1;
+   
+-- What was the average distance travelled for each customer?
+
+SELECT   customer_id,
+         round(avg(distance)) AS avg_distance_travelled
+FROM     temp_runner_orders JOIN temp_table USING (order_id)
+WHERE    cancellation IS NULL
+GROUP BY 1;
+
+-- What was the difference between the longest and shortest delivery times for all orders?
+
+SELECT MAX(duration) - MIN(duration) AS maximum_difference
+FROM   temp_runner_orders;
+
+-- What was the average speed for each runner for each delivery and do you notice any trend for these values?
+SELECT 
+    runner_id, 
+    order_id,
+    CAST(distance AS DECIMAL) AS distance_km,
+    ROUND(duration / 60, 2) AS duration_hr,
+    ROUND(distance * 60 / duration, 2) AS average_speed
+FROM 
+    temp_runner_orders
+WHERE 
+    cancellation IS NULL
+ORDER BY 
+    runner_id, 
+    order_id;
+
+-- What is the successful delivery percentage for each runner?
+    
+SELECT   runner_id,
+         COUNT(pickup_time) AS delivered_orders,
+         COUNT(*) AS total_orders,
+         ROUND(100 * COUNT(pickup_time) / COUNT(*)) AS delivery_success_percentage
+FROM     temp_runner_orders
+GROUP BY 1
+ORDER BY 1;
