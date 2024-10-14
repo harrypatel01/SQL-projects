@@ -31,20 +31,7 @@ This dataset contains tables, in CSV format:
 - The `Vehicle` table contains information about vehicles involved in accidents, including details about vehicle type, age, and whether the vehicle is left-hand drive.
 
 
-
-## Relevant Links
-
-- [Mehrdad - YT](https://www.youtube.com/watch?v=SrZAnQrGQhA&t=1643s)
-
-
 ## Contributing
 `Contributions` are always welcome !!
 
 If you would like to contribute to the project, please `fork` the repository and make a `pull request`.
-
-
-## Support
-
-If you have any doubts, queries, or suggestions, please connect with me on [LinkedIn](https://www.linkedin.com/in/faizanxmulla/).
-
-Do ⭐ the repository if it inspired you, gave you ideas of your own, or helped you in any way !!
