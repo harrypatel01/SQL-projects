@@ -1,11 +1,3 @@
-<p align="center">  
-	<br>
-	<a href="">
-        <img width=70% src="assets/thumbnail.jpg"> 
-    </a>
-    <br>
-    <br>
-</p>
 
 
 ## Table Of Contents
@@ -17,9 +9,7 @@
   
   - [Approach](#approach)
 
-  - [Relevant Insights](#relevant-insights)
 
-  - [Relevant Links](#relevant-links)
 
 
 ## Introduction
