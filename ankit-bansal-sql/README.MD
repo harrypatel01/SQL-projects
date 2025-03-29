@@ -20,7 +20,7 @@ Below is an index of the problems covered, with links to the corresponding video
 
 | Sr. No. | Problem / Video Title                                                                          | YouTube Video                                                   |
 |---------|------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
-| 1       | [Derive points ICC tournament](./complex-sql-questions-playlist/01-derive-points-icc-tournament.md)                           | [Watch Video](https://www.youtube.com/watch?v=qyAgWL066Vo)      |
+| 1       | [Derive points ICC tournament](./ankit-bansal-sql/complex-questions-playlist/01-derive-points-icc-tournament.md.md)                           | [Watch Video](https://www.youtube.com/watch?v=qyAgWL066Vo)      |
 | 2       | [Find new & repeat customers](./complex-sql-questions-playlist/02-find-new-&-repeat-customers.md)                             | [Watch Video](https://www.youtube.com/watch?v=MpAMjtvarrc)      |
 | 3       | [Employee visits & Resource Analysis](./complex-sql-questions-playlist/03-employee-visits-&-resource-analysis.md)             | [Watch Video](https://www.youtube.com/watch?v=P6kNMyqKD0A)      |
 | 4       | [Nth occurrence of Sunday](./complex-sql-questions-playlist/04-nth-occurence-of-sunday.md)                                    | [Watch Video](https://www.youtube.com/watch?v=6XQAokp4UCs)      |
